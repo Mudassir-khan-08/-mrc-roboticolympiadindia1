@@ -2,10 +2,12 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="{{ url_for('main.home') }}" class="logo">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Robofest India Logo" class="logo-img" onerror="this.style.display='none'">
-                    <span class="logo-text">H.E.R.O INDIA</span>
-                </a>
+                <div class="logo-section">
+                    <a href="{{ url_for('main.home') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/mrc.png') }}" alt="MRC India Logo" class="logo-img" onerror="this.style.display='none'">
+                        <span class="logo-text">MRC Robotic Olympiad India</span>
+                    </a>
+                </div>
                 
                 <button class="mobile-menu-btn" aria-label="Toggle menu">
                     <span></span>
@@ -17,17 +19,7 @@
                     <li class="nav-item"><a href="{{ url_for('main.home') }}" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="{{ url_for('competitions.competitions_list') }}" class="nav-link">Competitions</a></li>
                     <li class="nav-item"><a href="{{ url_for('main.profile') }}" class="nav-link">About</a></li>
-                   {# <li class="nav-item"><a href="{{ url_for('main.partnerships') }}" class="nav-link">Partnerships</a></li> #}
-
-                    <!--<li class="nav-item"><a href="{{ url_for('main.contact') }}" class="nav-link">Contact</a></li>-->
-                    <li class="nav-item nav-item-cta">
-                        <!-- If your link is the Google Form -->
-                    <a href="https://script.google.com/macros/s/AKfycbzZsT-XY9Dx4uTxAt0rFWIzkIrWnsm-PAEH5oGrE2Xge38ddSgQaf9WaG3S5di6gEZPgw/exec" target="_blank" class="btn btn-register">Register Now</a>
-
-<!-- OR if you have a different registration page -->
-                    
-
-                    </li>
+                    <li class="nav-item"><a href="/register" class="nav-link">Register now</a></li>
                 </ul>
             </div>
         </div>
@@ -38,19 +30,38 @@
     .header {
         background: white;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        position: sticky;
+        position: fixed; /* Changed from sticky to fixed */
         top: 0;
+        left: 0;
+        right: 0;
         z-index: 1000;
+        width: 100%;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        width: 100%;
     }
     
     .navbar {
         padding: 1rem 0;
+        width: 100%;
     }
     
     .nav-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
+        width: 100%;
+    }
+    
+    .logo-section {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0; /* Prevents logo from shrinking */
     }
     
     .logo {
@@ -61,6 +72,7 @@
         font-size: 1.5rem;
         color: var(--primary-color);
         transition: transform 0.3s ease;
+        text-decoration: none;
     }
     
     .logo:hover {
@@ -68,17 +80,17 @@
     }
     
     .logo-img {
-        width: 50px;
-        height: 50px;
+        width: 150px;
+        height: 100px;
         object-fit: contain;
+        flex-shrink: 0; /* Prevents image from shrinking */
     }
     
     .logo-text {
         font-weight: 800;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: #F59E0B;
+        white-space: nowrap;
+        flex-shrink: 0; /* Prevents text from shrinking */
     }
     
     .mobile-menu-btn {
@@ -117,6 +129,9 @@
         list-style: none;
         gap: 30px;
         align-items: center;
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0; /* Prevents nav menu from shrinking */
     }
     
     .nav-item {
@@ -129,6 +144,9 @@
         border-radius: 6px;
         transition: all 0.3s ease;
         position: relative;
+        text-decoration: none;
+        color: inherit;
+        white-space: nowrap;
     }
     
     .nav-link::after {
@@ -152,8 +170,19 @@
         width: 80%;
     }
     
+    /* Active link styling */
+    .nav-link.active {
+        color: var(--accent-color);
+        background-color: rgba(245, 158, 11, 0.1);
+    }
+    
+    .nav-link.active::after {
+        width: 80%;
+        background: var(--accent-color);
+    }
+    
     /* Register Button Styling */
-    .btn-register {
+    .nav-link[href="/register"] {
         background: linear-gradient(135deg, var(--accent-color) 0%, #d97706 100%);
         color: white;
         padding: 10px 24px;
@@ -163,17 +192,32 @@
         transition: all 0.3s ease;
         box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
         border: none;
-        display: inline-block;
     }
     
-    .btn-register:hover {
+    .nav-link[href="/register"]:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(245, 158, 11, 0.4);
         background: linear-gradient(135deg, #d97706 0%, var(--accent-color) 100%);
     }
     
-    .nav-item-cta {
-        margin-left: 10px;
+    /* Add padding to body to account for fixed header */
+    body {
+        padding-top: 80px; /* Adjust based on your header height */
+    }
+    
+    @media (max-width: 1024px) {
+        .logo-img {
+            width: 120px;
+            height: 80px;
+        }
+        
+        .logo-text {
+            font-size: 1.3rem;
+        }
+        
+        .nav-menu {
+            gap: 20px;
+        }
     }
     
     @media (max-width: 768px) {
@@ -194,6 +238,7 @@
             gap: 10px;
             transition: left 0.3s ease;
             overflow-y: auto;
+            z-index: 1000;
         }
         
         .nav-menu.active {
@@ -204,11 +249,6 @@
             width: 100%;
         }
         
-        .nav-item-cta {
-            margin-left: 0;
-            margin-top: 10px;
-        }
-        
         .nav-link {
             display: block;
             width: 100%;
@@ -216,10 +256,9 @@
             padding: 12px 20px;
         }
         
-        .btn-register {
+        .nav-link[href="/register"] {
             width: 100%;
             text-align: center;
-            display: block;
         }
         
         /* Overlay when mobile menu is open */
@@ -239,8 +278,44 @@
         }
         
         .logo-img {
-            width: 40px;
-            height: 40px;
+            width: 100px;
+            height: 70px;
+        }
+        
+        .logo {
+            gap: 8px;
+        }
+        
+        body {
+            padding-top: 70px; /* Reduced for mobile */
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .logo-text {
+            font-size: 1.1rem;
+        }
+        
+        .logo-img {
+            width: 80px;
+            height: 60px;
+        }
+        
+        .logo {
+            gap: 6px;
+        }
+    }
+    
+    @media (max-width: 540px) {
+        .logo-text {
+            font-size: 1rem;
+            white-space: normal;
+            max-width: 120px;
+        }
+        
+        .logo-img {
+            width: 70px;
+            height: 50px;
         }
     }
     
@@ -253,10 +328,78 @@
             left: 100%;
             width: 0;
         }
+        
+        .logo-text {
+            font-size: 0.9rem;
+            max-width: 100px;
+        }
+        
+        .logo-img {
+            width: 60px;
+            height: 40px;
+        }
+        
+        .logo {
+            gap: 4px;
+        }
+        
+        .container {
+            padding: 0 15px;
+        }
     }
 </style>
 
-
-
-
-<!--i want this file puch in github in githhub give full process when i share link this any one it has to show my website not any code give full  process-->
+<script>
+    // JavaScript to handle active navigation link and mobile menu
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            });
+        }
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (navMenu.classList.contains('active')) {
+                    mobileMenuBtn.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                
+                // Set active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Set active link based on current URL
+        const currentUrl = window.location.pathname;
+        navLinks.forEach(link => {
+            const linkUrl = link.getAttribute('href');
+            if (linkUrl === currentUrl || 
+                (linkUrl === '{{ url_for("main.home") }}' && currentUrl === '/') ||
+                (linkUrl === '{{ url_for("main.profile") }}' && currentUrl.includes('profile'))) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Close menu when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (navMenu.classList.contains('active') && 
+                !navMenu.contains(event.target) && 
+                !mobileMenuBtn.contains(event.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+</script>
